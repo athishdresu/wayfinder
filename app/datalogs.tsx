@@ -41,15 +41,16 @@ export default function DataLogs({ logs, setRecentScans }: any) {
     <div className="px-10 pb-10 max-w-5xl relative">
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden transition-colors duration-300">
         
-        <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
-          <h2 className="text-lg font-semibold flex items-center gap-2 dark:text-white">
+        {/* UPDATED: Mobile Responsive Header */}
+        <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50/50 dark:bg-slate-800/50">
+          <h2 className="text-lg font-semibold flex items-center gap-2 dark:text-white shrink-0">
             <Database size={20} className="text-emerald-500" /> Telemetry Database
           </h2>
-          <div className="flex gap-3">
-            <button onClick={() => setRecentScans([])} className="text-sm font-semibold text-red-500 hover:text-red-600 px-3 py-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition">
+          <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+            <button onClick={() => setRecentScans([])} className="text-sm font-semibold text-red-500 hover:text-red-600 px-3 py-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition whitespace-nowrap">
               Clear Database
             </button>
-            <button onClick={downloadCSV} className="bg-slate-900 dark:bg-emerald-600 text-white text-sm font-semibold px-4 py-1.5 rounded-lg hover:bg-slate-800 dark:hover:bg-emerald-500 transition flex items-center gap-2 shadow-sm">
+            <button onClick={downloadCSV} className="bg-slate-900 dark:bg-emerald-600 text-white text-sm font-semibold px-4 py-1.5 rounded-lg hover:bg-slate-800 dark:hover:bg-emerald-500 transition flex items-center gap-2 shadow-sm whitespace-nowrap">
               <Download size={14} /> Export All to CSV
             </button>
           </div>
@@ -62,39 +63,41 @@ export default function DataLogs({ logs, setRecentScans }: any) {
               <p>No historical data found in the database.</p>
             </div>
           ) : (
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-slate-50 dark:bg-slate-800/30 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
-                  <th className="p-4 font-semibold">Date & Time</th>
-                  <th className="p-4 font-semibold">Coordinates</th>
-                  <th className="p-4 font-semibold w-1/2">Intelligence Summary</th>
-                  <th className="p-4 font-semibold text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="text-sm text-slate-700 dark:text-slate-300 divide-y divide-slate-100 dark:divide-slate-800/50">
-                {logs.map((log: any) => (
-                  <tr 
-                    key={log.id} 
-                    onClick={() => setSelectedLog(log)}
-                    className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition cursor-pointer"
-                  >
-                    <td className="p-4 whitespace-nowrap font-medium text-slate-900 dark:text-white">
-                      <div className="flex flex-col">
-                        <span>{log.date || "Today"}</span>
-                        <span className="text-xs text-slate-400">{log.time}</span>
-                      </div>
-                    </td>
-                    <td className="p-4 whitespace-nowrap font-mono text-xs">{log.coords}</td>
-                    <td className="p-4"><p className="line-clamp-2 leading-relaxed">{log.summary}</p></td>
-                    <td className="p-4 text-right">
-                      <button onClick={(e) => handleDelete(e, log.id)} className="text-slate-400 hover:text-red-500 transition p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg">
-                        <Trash2 size={16} />
-                      </button>
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[600px]">
+                <thead>
+                  <tr className="bg-slate-50 dark:bg-slate-800/30 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+                    <th className="p-4 font-semibold">Date & Time</th>
+                    <th className="p-4 font-semibold">Coordinates</th>
+                    <th className="p-4 font-semibold w-1/2">Intelligence Summary</th>
+                    <th className="p-4 font-semibold text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="text-sm text-slate-700 dark:text-slate-300 divide-y divide-slate-100 dark:divide-slate-800/50">
+                  {logs.map((log: any) => (
+                    <tr 
+                      key={log.id} 
+                      onClick={() => setSelectedLog(log)}
+                      className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition cursor-pointer"
+                    >
+                      <td className="p-4 whitespace-nowrap font-medium text-slate-900 dark:text-white">
+                        <div className="flex flex-col">
+                          <span>{log.date || "Today"}</span>
+                          <span className="text-xs text-slate-400">{log.time}</span>
+                        </div>
+                      </td>
+                      <td className="p-4 whitespace-nowrap font-mono text-xs">{log.coords}</td>
+                      <td className="p-4"><p className="line-clamp-2 leading-relaxed">{log.summary}</p></td>
+                      <td className="p-4 text-right">
+                        <button onClick={(e) => handleDelete(e, log.id)} className="text-slate-400 hover:text-red-500 transition p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg">
+                          <Trash2 size={16} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </div>

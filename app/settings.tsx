@@ -24,7 +24,10 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="px-10 pb-10 max-w-4xl flex flex-col gap-8">
+    // UPDATED: Changed px-10 to px-4 md:px-10 for mobile padding
+    <div className="px-4 md:px-10 pb-10 max-w-4xl flex flex-col gap-8">
+      
+      {/* APPEARANCE */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-8 transition-colors">
         <h2 className="text-xl font-bold mb-6 flex items-center gap-3 border-b border-slate-100 dark:border-slate-800 pb-4 dark:text-white">
           <Palette className="text-emerald-500" size={24} /> Appearance
@@ -57,25 +60,27 @@ export default function SettingsPage() {
           <Navigation className="text-emerald-500" size={24} /> Telemetry Preferences
         </h2>
         <div className="flex flex-col gap-6">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <div>
               <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Background Tracking</label>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Allow WayFinder to ping your GPS when minimized.</p>
             </div>
-            <button onClick={() => setActiveTracking(!activeTracking)} className={`w-12 h-6 rounded-full flex items-center transition-colors p-1 ${activeTracking ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`}>
+            <button onClick={() => setActiveTracking(!activeTracking)} className={`w-12 h-6 rounded-full flex items-center transition-colors p-1 shrink-0 ${activeTracking ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`}>
               <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${activeTracking ? 'translate-x-6' : 'translate-x-0'}`}></div>
             </button>
           </div>
 
-          <div className="flex items-center justify-between">
+          {/* UPDATED: Stacks on mobile, inline on laptop */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Distance Units</label>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Select your preferred measurement standard for routing.</p>
             </div>
+            {/* UPDATED: w-full sm:w-auto ensures dropdown doesn't break the layout */}
             <select 
               value={distanceUnit}
               onChange={(e) => setDistanceUnit(e.target.value)}
-              className="border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white"
+              className="w-full sm:w-auto border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-slate-800 dark:text-white"
             >
               <option value="metric">Metric (Meters / Kilometers)</option>
               <option value="imperial">Imperial (Feet / Miles)</option>
@@ -91,28 +96,28 @@ export default function SettingsPage() {
         </h2>
         
         <div className="flex flex-col gap-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-slate-100 dark:bg-slate-800 p-2 rounded-lg text-slate-500 dark:text-slate-400"><Volume2 size={20}/></div>
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-start sm:items-center gap-3">
+              <div className="bg-slate-100 dark:bg-slate-800 p-2 rounded-lg text-slate-500 dark:text-slate-400 shrink-0"><Volume2 size={20}/></div>
               <div>
                 <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Audio Waypoints</label>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Play sounds when a new navigational node is reached.</p>
               </div>
             </div>
-            <button onClick={() => setAudioAlerts(!audioAlerts)} className={`w-12 h-6 rounded-full flex items-center transition-colors p-1 ${audioAlerts ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`}>
+            <button onClick={() => setAudioAlerts(!audioAlerts)} className={`w-12 h-6 rounded-full flex items-center transition-colors p-1 shrink-0 ${audioAlerts ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`}>
               <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${audioAlerts ? 'translate-x-6' : 'translate-x-0'}`}></div>
             </button>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-slate-100 dark:bg-slate-800 p-2 rounded-lg text-slate-500 dark:text-slate-400"><Vibrate size={20}/></div>
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-start sm:items-center gap-3">
+              <div className="bg-slate-100 dark:bg-slate-800 p-2 rounded-lg text-slate-500 dark:text-slate-400 shrink-0"><Vibrate size={20}/></div>
               <div>
                 <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Haptic Feedback</label>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Vibrate device upon successful payload extraction.</p>
               </div>
             </div>
-            <button onClick={() => setHaptics(!haptics)} className={`w-12 h-6 rounded-full flex items-center transition-colors p-1 ${haptics ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`}>
+            <button onClick={() => setHaptics(!haptics)} className={`w-12 h-6 rounded-full flex items-center transition-colors p-1 shrink-0 ${haptics ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`}>
               <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${haptics ? 'translate-x-6' : 'translate-x-0'}`}></div>
             </button>
           </div>
