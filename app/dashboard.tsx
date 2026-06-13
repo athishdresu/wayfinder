@@ -185,7 +185,7 @@ export default function Dashboard({ recentScans, setRecentScans }: any) {
   };
 
   return (
-    <div className="px-10 pb-10">
+    <div className="px-4 md:px-10 pb-10">
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-5xl">
         <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between transition-colors">
@@ -244,7 +244,7 @@ export default function Dashboard({ recentScans, setRecentScans }: any) {
             {!aiResult ? (
               <form onSubmit={handleAnalyze} className="flex flex-col gap-4">
                 {!isCameraActive && !previewUrl && (
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <button type="button" onClick={startCamera} className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-8 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-800/50 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:border-emerald-500 transition group">
                       <Video size={36} className="text-slate-400 group-hover:text-emerald-500 mb-2" />
                       <span className="font-medium text-sm text-slate-600 dark:text-slate-300 group-hover:text-emerald-500">Live Camera</span>

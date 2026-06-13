@@ -12,11 +12,9 @@ export default function SettingsPage() {
   const [autoPurge, setAutoPurge] = useState(false);
   const [distanceUnit, setDistanceUnit] = useState("metric");
   
-  // New Offline Storage States
   const [offlineMode, setOfflineMode] = useState(false);
   const [cacheRegion, setCacheRegion] = useState("nit_campus");
   
-  // Alert States
   const [audioAlerts, setAudioAlerts] = useState(true);
   const [haptics, setHaptics] = useState(true);
 

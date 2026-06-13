@@ -4,10 +4,8 @@ import { Database, Trash2, Download, History, X, MapPin, Clock } from "lucide-re
 import ReactMarkdown from 'react-markdown';
 
 export default function DataLogs({ logs, setRecentScans }: any) {
-  // THE FIX: State to control the detailed modal view
   const [selectedLog, setSelectedLog] = useState<any>(null);
 
-  // THE FIX: CSV Download Engine
   const downloadCSV = () => {
     if (!logs || logs.length === 0) {
       alert("No data available to export.");
@@ -18,7 +16,6 @@ export default function DataLogs({ logs, setRecentScans }: any) {
     const csvRows = [headers.join(",")];
     
     logs.forEach((log: any) => {
-      // We must escape quotes so the CSV doesn't break on formatting
       const cleanText = `"${(log.fullText || log.summary).replace(/"/g, '""')}"`;
       csvRows.push(`${log.id},${log.date || "N/A"},${log.time},"${log.coords}",${cleanText}`);
     });
@@ -36,7 +33,7 @@ export default function DataLogs({ logs, setRecentScans }: any) {
   };
 
   const handleDelete = (e: React.MouseEvent, id: number) => {
-    e.stopPropagation(); // Prevents the modal from opening when you click delete
+    e.stopPropagation();
     setRecentScans(logs.filter((l: any) => l.id !== id));
   };
 
@@ -78,7 +75,7 @@ export default function DataLogs({ logs, setRecentScans }: any) {
                 {logs.map((log: any) => (
                   <tr 
                     key={log.id} 
-                    onClick={() => setSelectedLog(log)} // Opens the modal!
+                    onClick={() => setSelectedLog(log)}
                     className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition cursor-pointer"
                   >
                     <td className="p-4 whitespace-nowrap font-medium text-slate-900 dark:text-white">
@@ -102,7 +99,6 @@ export default function DataLogs({ logs, setRecentScans }: any) {
         </div>
       </div>
 
-      {/* THE FIX: Full Intelligence Modal Overlay */}
       {selectedLog && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 dark:bg-black/60 backdrop-blur-sm">
           <div className="bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[80vh] rounded-2xl shadow-2xl flex flex-col border border-slate-200 dark:border-slate-800 overflow-hidden animate-in fade-in zoom-in duration-200">
