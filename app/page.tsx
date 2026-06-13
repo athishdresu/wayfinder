@@ -106,7 +106,7 @@ export default function Home() {
                   {activeTab === "settings" && "System Settings"}
                 </h1>
                 <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 transition-colors">
-                  {activeTab === "dashboard" && "System diagnostics and live routing intelligence."}
+                  {activeTab === "dashboard" && ""}
                   {activeTab === "logs" && "Review and export historical scan telemetry."}
                   {activeTab === "settings" && "Configure AI engine and backend architecture."}
                 </p>
