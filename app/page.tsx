@@ -8,14 +8,31 @@ import SettingsPage from "./settings";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [recentScans, setRecentScans] = useState([]);
+  const [recentScans, setRecentScans] = useState<any[]>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (window.innerWidth < 768) {
       setIsSidebarOpen(false);
     }
+    
+    const savedLogs = localStorage.getItem("wayfinder_logs");
+    if (savedLogs) {
+      try {
+        setRecentScans(JSON.parse(savedLogs));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    setIsLoaded(true);
   }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem("wayfinder_logs", JSON.stringify(recentScans));
+    }
+  }, [recentScans, isLoaded]);
 
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans overflow-hidden transition-colors duration-300">
@@ -106,7 +123,7 @@ export default function Home() {
                   {activeTab === "settings" && "System Settings"}
                 </h1>
                 <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 transition-colors">
-                  {activeTab === "dashboard" && ""}
+                  {activeTab === "dashboard" && "System diagnostics and live routing intelligence."}
                   {activeTab === "logs" && "Review and export historical scan telemetry."}
                   {activeTab === "settings" && "Configure AI engine and backend architecture."}
                 </p>

@@ -23,21 +23,7 @@ export async function POST(req: Request) {
         mimeType: imageFile.type,
       },
     };
-    const prompt = `You are 'WayFinder', an advanced but highly user-friendly spatial navigation assistant. 
-    Analyze this image captured at GPS coordinates: ${lat}, ${lng}. 
-
-    Format your response using Markdown, and use **bold text** to highlight important objects, landmarks, safety hazards, and directions.
-
-    Structure your intelligence report strictly into these three sections:
-    
-    ### Location Context
-    Accurately describe the specific environment (e.g., indoor lounge, outdoor street, office building) based on the visual data and coordinates.
-    
-    ### Environment Scan
-    Identify the key structural pathways, immediate obstacles, or points of interest around the user. Make sure to **bold** the most important items.
-    
-    ### Recommended Action
-    Give the user clear, actionable advice on what to do next, how to navigate around immediate obstacles, or where to move based on their surroundings.`;
+    const prompt = `You are WayFinder. Analyze this image and GPS coordinates (${latitude}, ${longitude}). In exactly one single, short paragraph, do the following in order: 1) Describe the immediate environment and objects you see in the photo. 2) Provide a highly accurate address including the estimated Street Name, Neighborhood, City, State, and Country. 3) Name 2 nearby tourist spots. 4) End the paragraph with exactly this sentence: "If you want to navigate anywhere, access the Live Map below."`;
     const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
     const result = await model.generateContent([prompt, imagePart]);
     const aiText = result.response.text();
